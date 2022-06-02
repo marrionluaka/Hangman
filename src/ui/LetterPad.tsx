@@ -7,7 +7,7 @@ const LetterPad = ({ onClick }: { onClick(letter: string): void }): JSX.Element 
     <ul>
       {
         alphabet.map((letter: string) => (
-          <LetterKey letter={letter} onClick={onClick} />
+          <LetterKey key={letter} letter={letter} onClick={onClick} />
         ))
       }
     </ul>
