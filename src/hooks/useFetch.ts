@@ -21,7 +21,6 @@ export default function useFetch<T>(getResource: string | (() => Promise<T>)): {
 
   useEffect(() => {
     (async () => {
-      setRequest({ state: 'pending' })
       try {
         const data = await (typeof getResource === 'string' ? _getDefaultResource(getResource) : getResource())
         setRequest({ state: 'ok', data })
