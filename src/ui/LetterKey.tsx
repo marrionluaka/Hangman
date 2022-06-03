@@ -3,10 +3,11 @@ import React from 'react'
 type Props = {
   letter: string
   onClick(letter: string): void
+  shouldDisable: (letter: string) => boolean
 }
 
-const LetterKey = ({ letter, onClick }: Props): JSX.Element => (
-  <button data-testid={letter} onClick={onClick.bind(null, letter)}>
+const LetterKey = ({ shouldDisable, letter, onClick }: Props): JSX.Element => (
+  <button data-testid={letter} disabled={shouldDisable?.(letter)} onClick={onClick.bind(null, letter)}>
     {letter}
   </button>
 )
