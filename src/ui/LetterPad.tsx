@@ -2,7 +2,6 @@ import React from 'react'
 import { curry } from 'ramda'
 
 import LetterKey from './LetterKey'
-import { MAX_ALLOWED_GUESSES } from '../core'
 
 type Props = {
   disable: boolean
