@@ -1,4 +1,4 @@
-import { head } from 'ramda'
+import { head, once } from 'ramda'
 import React, { useState } from 'react'
 
 import Guesses from './ui/Guesses'
@@ -9,6 +9,7 @@ import IncorrectGuesses from './ui/IncorrectGuesses'
 import useFetch from './hooks/useFetch'
 import { hidePhrase, getIncorrectGuesses, MAX_ALLOWED_GUESSES } from './core'
 
+const concealAnswer = once(console.dir)
 const RANDOM_WORD_ENDPOINT = 'https://random-word-api.herokuapp.com/word'
 
 function App() {
@@ -34,6 +35,8 @@ function App() {
     setGuesses(new Set())
     await fetchData()
   }
+
+  concealAnswer({ answer: word })
 
   return (
     <main>
