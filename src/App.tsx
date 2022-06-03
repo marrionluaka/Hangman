@@ -1,44 +1,49 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { head } from 'ramda'
+import React, { useState } from 'react'
+
+import Guesses from './ui/Guesses'
+import LetterPad from './ui/LetterPad'
+import CorrectAnswer from './ui/CorrectAnswer'
+import IncorrectGuesses from './ui/IncorrectGuesses'
+import useFetch from './hooks/useFetch'
+import { hidePhrase, getIncorrectGuesses, MAX_ALLOWED_GUESSES } from './core'
+
+const RANDOM_WORD_ENDPOINT = 'https://random-word-api.herokuapp.com/word'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [guesses, setGuesses] = useState<Set<string>>(new Set())
+  const [numOfAttemptedGuesses, setNumOfAttemptedGuesses] = useState(0)
+  const { request: req, fetchData } = useFetch<string[]>(RANDOM_WORD_ENDPOINT)
+
+  if (req.state === 'pending') return <div>Loading...</div>
+
+  if (req.state === 'error') return <div>Error!</div>
+
+  const phrase = head(req.data) as string
+  const listOfGuesses = hidePhrase(phrase, guesses)
+  const listOfIncorrectGuesses = getIncorrectGuesses(listOfGuesses, guesses)
+  const hasRunOutOfGuesses = numOfAttemptedGuesses >= MAX_ALLOWED_GUESSES
+
+  const handleGuesses = (letter: string): void => {
+    setGuesses(letters => new Set(letters).add(letter.toLowerCase()))
+    setNumOfAttemptedGuesses(numOfAttemptedGuesses + 1)
+  }
+
+  const handleRestart = async () => {
+    setGuesses(new Set())
+    setNumOfAttemptedGuesses(0)
+    await fetchData()
+  }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <main>
+      {/* <Hangman guesses={listOfGuesses} /> */}
+      { hasRunOutOfGuesses && <CorrectAnswer correctAnswer={phrase} /> }
+      <Guesses guesses={listOfGuesses} />
+      <LetterPad onClick={handleGuesses} guesses={Array.from(guesses)} />
+      <IncorrectGuesses incorrectGuesses={listOfIncorrectGuesses} />
+      <button data-testid="restart" onClick={handleRestart}>Restart</button>
+    </main>
   )
 }
 
