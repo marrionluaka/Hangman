@@ -17,9 +17,4 @@ const getIncorrectGuesses = curry((phrase: string[], guesses: Set<String>): stri
   return filter((char: string) => !phrase.includes(char), Array.from(guesses) as string[])
 })
 
-const alphabet = Array
-  .from(Array(26))
-  .map((_, i) => i + 65)
-  .map((x) => String.fromCharCode(x))
-
-export { alphabet, hidePhrase, getIncorrectGuesses }
+export { hidePhrase, getIncorrectGuesses }
