@@ -2,6 +2,7 @@ import React from 'react'
 import { curry } from 'ramda'
 
 import LetterKey from './LetterKey'
+import { MAX_ALLOWED_GUESSES } from '../core'
 
 type Props = {
   guesses: string[]
@@ -17,13 +18,19 @@ const alphabet = Array
 const shouldDisable = curry((guesses: string[], letter: string): boolean => guesses.includes(letter))
 
 const LetterPad = ({ guesses, onClick }: Props): JSX.Element => {
+  const hasRunOutOfGuesses = guesses.length >= MAX_ALLOWED_GUESSES
+
+  const disabledLetterKeys = alphabet.map((letter: string) => (
+    <LetterKey shouldDisable={() => true} key={letter} letter={letter} onClick={onClick} />
+  ))
+
+  const letterKeys = alphabet.map((letter: string) => (
+    <LetterKey shouldDisable={shouldDisable(guesses)} key={letter} letter={letter} onClick={onClick} />
+  ))
+
   return (
     <ul>
-      {
-        alphabet.map((letter: string) => (
-          <LetterKey shouldDisable={shouldDisable(guesses)} key={letter} letter={letter} onClick={onClick} />
-        ))
-      }
+      { hasRunOutOfGuesses ? disabledLetterKeys : letterKeys }
     </ul>
   )
 }

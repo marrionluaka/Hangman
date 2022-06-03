@@ -1,5 +1,7 @@
 import { split, map, pipe, curry, filter } from 'ramda'
 
+const MAX_ALLOWED_GUESSES = 9
+
 const getGuess = curry((guesses: Set<string>, character: string) => {
   if (character === ' ') return ' '
   if (guesses.has(character)) return character
@@ -17,4 +19,4 @@ const getIncorrectGuesses = curry((phrase: string[], guesses: Set<String>): stri
   return filter((char: string) => !phrase.includes(char), Array.from(guesses) as string[])
 })
 
-export { hidePhrase, getIncorrectGuesses }
+export { hidePhrase, getIncorrectGuesses, MAX_ALLOWED_GUESSES }
