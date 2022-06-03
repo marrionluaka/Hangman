@@ -20,8 +20,8 @@ function App() {
   if (req.state === 'error') return <div>Error!</div>
 
   const phrase = head(req.data) as string
-  const listOfGuesses = hidePhrase(phrase, guesses)
-  const listOfIncorrectGuesses = getIncorrectGuesses(listOfGuesses, guesses)
+  const hiddenGuesses = hidePhrase(phrase, guesses)
+  const incorrectGuesses = getIncorrectGuesses(hiddenGuesses, guesses)
   const hasRunOutOfGuesses = numOfAttemptedGuesses >= MAX_ALLOWED_GUESSES
 
   const handleGuesses = (letter: string): void => {
@@ -37,11 +37,11 @@ function App() {
 
   return (
     <main>
-      {/* <Hangman guesses={listOfGuesses} /> */}
+      {/* <Hangman guesses={hiddenGuesses} /> */}
       { hasRunOutOfGuesses && <CorrectAnswer correctAnswer={phrase} /> }
-      <Guesses guesses={listOfGuesses} />
+      <Guesses guesses={hiddenGuesses} />
       <LetterPad onClick={handleGuesses} guesses={Array.from(guesses)} />
-      <IncorrectGuesses incorrectGuesses={listOfIncorrectGuesses} />
+      <IncorrectGuesses incorrectGuesses={incorrectGuesses} />
       <button data-testid="restart" onClick={handleRestart}>Restart</button>
     </main>
   )
