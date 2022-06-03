@@ -16,21 +16,28 @@ type RequestSuccess<T> = {
 
 export type RequestState<T> = RequestPending | RequestError | RequestSuccess<T>
 
-export default function useFetch<T>(getResource: string | (() => Promise<T>)): { request: RequestState<T> } {
+type UseFetch<T> = { request: RequestState<T>, fetchData(): Promise<void> }
+
+export default function useFetch<T>(getResource: string | (() => Promise<T>)): UseFetch<T> {
   const [request, setRequest] = useState<RequestState<T>>({ state: 'pending' })
 
   useEffect(() => {
     (async () => {
-      try {
-        const data = await (typeof getResource === 'string' ? _getDefaultResource(getResource) : getResource())
-        setRequest({ state: 'ok', data })
-      } catch (error) {
-        setRequest({ state: 'error', error })
-      }
+      await fetchData()
     })()
   }, [getResource])
 
-  return { request }
+  async function fetchData() {
+    setRequest({ state: 'pending' })
+    try {
+      const data = await (typeof getResource === 'string' ? _getDefaultResource(getResource) : getResource())
+      setRequest({ state: 'ok', data })
+    } catch (error) {
+      setRequest({ state: 'error', error })
+    }
+  }
+
+  return { request, fetchData }
 }
 
 async function _getDefaultResource(uri: string) {
