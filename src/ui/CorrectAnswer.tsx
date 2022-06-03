@@ -1,7 +1,7 @@
 import React from 'react'
 
 const CorrectAnswer = ({ correctAnswer }: { correctAnswer: string }): JSX.Element => (
-  <p>{correctAnswer}</p>
+  <p>The correct word was: {correctAnswer}</p>
 )
 
 export default CorrectAnswer
