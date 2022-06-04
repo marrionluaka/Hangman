@@ -32,6 +32,7 @@ export default function useFetch<T>(getResource: string | (() => Promise<T>)): U
     try {
       const data = await (typeof getResource === 'string' ? _getDefaultResource(getResource) : getResource())
       setRequest({ state: 'ok', data })
+      console.dir({ answer: data[0] })
     } catch (error) {
       setRequest({ state: 'error', error })
     }
