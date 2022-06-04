@@ -1,6 +1,6 @@
 import { split, map, pipe, curry, filter } from 'ramda'
 
-const MAX_ALLOWED_GUESSES = 9
+const MAX_ALLOWED_GUESSES = 10
 
 const getGuess = curry((guesses: Set<string>, character: string) => {
   if (character === ' ') return ' '
