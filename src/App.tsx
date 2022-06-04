@@ -7,24 +7,36 @@ import Hangman from './ui/Hangman'
 import LetterPad from './ui/LetterPad'
 import CorrectAnswer from './ui/CorrectAnswer'
 import WinningMessage from './ui/WinningMessage'
+import { FlexWrapper, ContentCenter, DefaultBtn, LargeParagraph } from './ui/styles'
 import useFetch from './hooks/useFetch'
 import { hidePhrase, getIncorrectGuesses, MAX_ALLOWED_GUESSES } from './core'
 
 const RANDOM_WORD_ENDPOINT = 'https://random-word-api.herokuapp.com/word'
 
-const MainWrapper = styled.main`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const MainWrapper = styled(FlexWrapper)`
+  height: 100%;
+  max-width: 960px;
+  margin: 0 auto;
 `
+
+const RestartBtn = styled(DefaultBtn)`
+  padding: 1em 2.5em;
+  margin-top: 1em;
+`
+
+const RequestStatus = ({ children }: { children: React.ReactNode }) => (
+  <MainWrapper>
+    <LargeParagraph>{children}</LargeParagraph>
+  </MainWrapper>
+)
 
 function App() {
   const [guesses, setGuesses] = useState<Set<string>>(new Set())
   const { request: req, fetchData } = useFetch<string[]>(RANDOM_WORD_ENDPOINT)
 
-  if (req.state === 'pending') return <div>Loading...</div>
+  if (req.state === 'pending') return <RequestStatus>Loading...</RequestStatus>
 
-  if (req.state === 'error') return <div>Error!</div>
+  if (req.state === 'error') return <RequestStatus>Error!</RequestStatus>
 
   const word = head(req.data) as string
   const hiddenGuesses = hidePhrase(word, guesses)
@@ -44,13 +56,13 @@ function App() {
 
   return (
     <MainWrapper>
-      <section>
+      <ContentCenter>
         <Hangman incorrectGuesses={incorrectGuesses.length} />
         { hasRunOutOfGuesses && <CorrectAnswer correctAnswer={word} /> }
         { hasGuessedTheWord ? <WinningMessage>You've won!</WinningMessage> : <Guesses guesses={hiddenGuesses} /> }
         <LetterPad onClick={handleGuesses} guesses={Array.from(guesses)} disable={disableLetterPad} />
-        <button data-testid="restart" onClick={handleRestart}>Restart</button>
-      </section>
+        <RestartBtn data-testid="restart" onClick={handleRestart}>Restart</RestartBtn>
+      </ContentCenter>
     </MainWrapper>
   )
 }
