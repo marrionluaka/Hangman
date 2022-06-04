@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.section`
+import { FlexWrapper } from './styles'
+
+const Content = styled.section`
   width: 300px;
   height: 300px;
   display: block;
@@ -90,18 +92,20 @@ const Platform = styled(Shared)`
 
 const Hangman = ({ incorrectGuesses }: { incorrectGuesses: number }): JSX.Element => {
   return (
-    <Wrapper>
-      { incorrectGuesses > 0 && <Platform data-testid="platform" /> }
-      { incorrectGuesses > 1 && <Pole data-testid="pole" /> }
-      { incorrectGuesses > 2 && <Hanger data-testid="hanger" /> }
-      { incorrectGuesses > 3 && <Cord data-testid="cord" /> }
-      { incorrectGuesses > 4 && <Head data-testid="head" /> }
-      { incorrectGuesses > 5 && <Torso data-testid="torso" /> }
-      { incorrectGuesses > 6 && <LeftArm data-testid="left-arm" /> }
-      { incorrectGuesses > 7 && <RightArm data-testid="right-arm" /> }
-      { incorrectGuesses > 8 && <LeftLeg data-testid="left-leg" /> }
-      { incorrectGuesses > 9 && <RightLeg data-testid="right-leg" /> }
-    </Wrapper>
+    <FlexWrapper>
+      <Content>
+        { incorrectGuesses > 0 && <Platform data-testid="platform" /> }
+        { incorrectGuesses > 1 && <Pole data-testid="pole" /> }
+        { incorrectGuesses > 2 && <Hanger data-testid="hanger" /> }
+        { incorrectGuesses > 3 && <Cord data-testid="cord" /> }
+        { incorrectGuesses > 4 && <Head data-testid="head" /> }
+        { incorrectGuesses > 5 && <Torso data-testid="torso" /> }
+        { incorrectGuesses > 6 && <LeftArm data-testid="left-arm" /> }
+        { incorrectGuesses > 7 && <RightArm data-testid="right-arm" /> }
+        { incorrectGuesses > 8 && <LeftLeg data-testid="left-leg" /> }
+        { incorrectGuesses > 9 && <RightLeg data-testid="right-leg" /> }
+      </Content>
+    </FlexWrapper>
   )
 }
 
