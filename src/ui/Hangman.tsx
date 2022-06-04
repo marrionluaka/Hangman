@@ -8,13 +8,17 @@ const Wrapper = styled.section`
   position: relative;
 `
 
-const Head = styled.div`
+const Shared = styled.div`
+  border: 3px solid black;
+  display: block;
+  position: absolute;
+`
+
+const Head = styled(Shared)`
   width: 50px;
   height: 60px;
   border: 5px solid black;
   border-radius: 50%;
-  display: block;
-  position: absolute;
   top: 21px;
   left: 133px;
   z-index: 1;
@@ -22,93 +26,66 @@ const Head = styled.div`
   transform-origin: center bottom;
 `
 
-const Torso = styled.div`
+const Torso = styled(Shared)`
   width: 6px;
   height: 100px;
-  border: 3px solid black;
-  display: block;
-  position: absolute;
   top: 80px;
   left: 156px;
 `
 
-const LeftArm = styled.div`
+const LeftArm = styled(Shared)`
   width: 100px;
   height: 6px;
-  border: 3px solid black;
-  display: block;
-  position: absolute;
   top: 86px;
   left: 57px;
   transform: rotate(-70deg);
   transform-origin: 100%;
 `
 
-const RightArm = styled.div`
+const RightArm = styled(Shared)`
   width: 100px;
   height: 6px;
-  border: 3px solid black;
-  display: block;
-  position: absolute;
   top: 86px;
   left: 161px;
   transform: rotate(70deg);
   transform-origin: 0%;
 `
 
-const LeftLeg = styled.div`
+const LeftLeg = styled(Shared)`
   width: 6px;
   height: 100px;
-  border: 3px solid black;
-  display: block;
-  position: absolute;
   top: 175px;
   left: 155px;
   transform: rotate(5deg);
   transform-origin: top;
 `
 
-const RightLeg = styled.div`
+const RightLeg = styled(Shared)`
   width: 6px;
   height: 100px;
-  border: 3px solid black;
-  display: block;
-  position: absolute;
   top: 175px;
   left: 157px;
   transform: rotate(-5deg);
   transform-origin: top;
 `
 
-const Cord = styled.div`
+const Cord = styled(Shared)`
   right: 47%;
   height: 8%;
-  border: 3px solid black;
-  display: block;
-  position: absolute;
 `
 
-const Hanger = styled.div`
+const Hanger = styled(Shared)`
   top: 0;
   width: 53%;
-  border: 3px solid black;
-  display: block;
-  position: absolute;
 `
 
-const Pole = styled.div`
+const Pole = styled(Shared)`
   height: 100%;
-  border: 3px solid black;
-  display: block;
-  position: absolute;
 `
 
-const Platform = styled.div`
+const Platform = styled(Shared)`
   bottom: 0;
   width: 100%;
-  border: 3px solid black;
-  display: block;
-  position: absolute;
 `
 
 const Hangman = ({ incorrectGuesses }: { incorrectGuesses: number }): JSX.Element => {
