@@ -1,16 +1,22 @@
-import { head, once } from 'ramda'
+import { head } from 'ramda'
+import styled from 'styled-components'
 import React, { useState } from 'react'
 
 import Guesses from './ui/Guesses'
+import Hangman from './ui/Hangman'
 import LetterPad from './ui/LetterPad'
 import CorrectAnswer from './ui/CorrectAnswer'
 import WinningMessage from './ui/WinningMessage'
-import IncorrectGuesses from './ui/IncorrectGuesses'
 import useFetch from './hooks/useFetch'
 import { hidePhrase, getIncorrectGuesses, MAX_ALLOWED_GUESSES } from './core'
 
-const concealAnswer = once(console.dir)
 const RANDOM_WORD_ENDPOINT = 'https://random-word-api.herokuapp.com/word'
+
+const MainWrapper = styled.main`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 function App() {
   const [guesses, setGuesses] = useState<Set<string>>(new Set())
@@ -36,17 +42,16 @@ function App() {
     await fetchData()
   }
 
-  concealAnswer({ answer: word })
-
   return (
-    <main>
-      {/* <Hangman guesses={hiddenGuesses} /> */}
-      { hasRunOutOfGuesses && <CorrectAnswer correctAnswer={word} /> }
-      { hasGuessedTheWord ? <WinningMessage>You've won!</WinningMessage> : <Guesses guesses={hiddenGuesses} /> }
-      <LetterPad onClick={handleGuesses} guesses={Array.from(guesses)} disable={disableLetterPad} />
-      <IncorrectGuesses incorrectGuesses={incorrectGuesses} />
-      <button data-testid="restart" onClick={handleRestart}>Restart</button>
-    </main>
+    <MainWrapper>
+      <section>
+        <Hangman incorrectGuesses={incorrectGuesses.length} />
+        { hasRunOutOfGuesses && <CorrectAnswer correctAnswer={word} /> }
+        { hasGuessedTheWord ? <WinningMessage>You've won!</WinningMessage> : <Guesses guesses={hiddenGuesses} /> }
+        <LetterPad onClick={handleGuesses} guesses={Array.from(guesses)} disable={disableLetterPad} />
+        <button data-testid="restart" onClick={handleRestart}>Restart</button>
+      </section>
+    </MainWrapper>
   )
 }
 
