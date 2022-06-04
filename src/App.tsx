@@ -59,7 +59,8 @@ function App() {
       <ContentCenter>
         <Hangman incorrectGuesses={incorrectGuesses.length} />
         { hasRunOutOfGuesses && <CorrectAnswer correctAnswer={word} /> }
-        { hasGuessedTheWord ? <WinningMessage>You've won!</WinningMessage> : <Guesses guesses={hiddenGuesses} /> }
+        { hasGuessedTheWord && <WinningMessage>You've won!</WinningMessage> }
+        <Guesses guesses={hiddenGuesses} />
         <LetterPad onClick={handleGuesses} guesses={Array.from(guesses)} disable={disableLetterPad} />
         <RestartBtn data-testid="restart" onClick={handleRestart}>Restart</RestartBtn>
       </ContentCenter>
