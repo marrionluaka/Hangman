@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const ListContainer = styled.ul`
+const ListContainer = styled.ul<{ guesses: string[] }>`
   list-style: none;
   display: flex;
   padding: 1rem 0;
