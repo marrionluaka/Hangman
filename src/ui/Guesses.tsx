@@ -5,13 +5,13 @@ const ListContainer = styled.ul`
   list-style: none;
   display: flex;
   padding: 1rem 0;
-  font-size: 1.25rem;
   justify-content: center;
-  letter-spacing: .75rem;
+  font-size: ${({ guesses }) => !guesses.includes('_') ? '2rem' : '1.25rem'};
+  letter-spacing: ${({ guesses }) => !guesses.includes('_') ? 'initial' : '.75rem'};
 `
 
 const Guesses = ({ guesses }: { guesses: string[] }): JSX.Element => (
-  <ListContainer>
+  <ListContainer guesses={guesses}>
     {
       guesses.map((guess: string, i: number) => (
         <li key={`${guess}-${i}`} data-testid={`guess-${i}`}>{guess}</li>
