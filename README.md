@@ -2,7 +2,7 @@
 
 Hangman implemented in React
 
-<img width="1138" alt="Screen Shot 2022-06-04 at 3 11 43 PM" src="https://user-images.githubusercontent.com/11777364/172027353-8d9315d3-de6f-463c-994b-e5d0c510e389.png">
+<img width="1082" alt="Screenshot 2023-06-08 at 2 00 18 AM" src="https://github.com/marrionluaka/Hangman/assets/11777364/e98e451e-d20c-41a5-95bc-68b7fedfe8aa">
 
 Try it out here: https://hangman-red-six.vercel.app/
 
