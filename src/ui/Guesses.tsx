@@ -4,9 +4,10 @@ import styled from 'styled-components'
 const ListContainer = styled.ul`
   list-style: none;
   display: flex;
-  justify-content: space-evenly;
   padding: 1rem 0;
   font-size: 1.25rem;
+  justify-content: center;
+  letter-spacing: .75rem;
 `
 
 const Guesses = ({ guesses }: { guesses: string[] }): JSX.Element => (
